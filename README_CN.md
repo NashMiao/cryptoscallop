@@ -26,6 +26,7 @@
 - raidus: 一个1到10的随机数，决定了扇贝的大小。
 - card_color_index：卡牌背景色，随机从定义颜色集`ColorSet`中选取。
 - main_color_index: 扇贝的主色，随机从预定义颜色集`ColorSet`中选取。
+- muscle_color_index：扇贝肉的颜色，随机从预定义颜色集`ColorSet`中选取。
 - id: 具有唯一性的扇贝编号，由`salt <- rand(1,100000)`，`id <- sha256(birth_time|raidus|main_color|salt)`生成。
 - owner：扇贝的主人，由ONTID标识。
 - is_sell：扇贝是否处于出售状态。
@@ -68,7 +69,7 @@ ColorSet中的数据定义如下：
 
 ## 2. 角色定义
 
-在这个非同质代币游戏中，有三个角色：
+在这个非同质扇贝游戏中，有三个角色：
 
 - 管理员
 - 买家
