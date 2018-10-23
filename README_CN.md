@@ -27,6 +27,7 @@ Scallop的数据结构定义如下：
 - id: 具有唯一性的扇贝编号，由`salt <- rand(1,100000)`，`id <- sha256(birth_time|raidus|main_color|salt)`生成。
 - owner：扇贝的主人，由ONTID标识。
 - is_sell：扇贝是否处于出售状态。
+- img_path: 扇贝外观图在IPFS中的存储位置。
 
 ColorSet中的数据定义如下：
 
