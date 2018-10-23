@@ -13,12 +13,14 @@
     - [3.4. auction_scallop()](#34-auction_scallop)
     - [3.5. lottery_scallop()](#35-lottery_scallop)
     - [3.6. query_balance()](#36-query_balance)
+    - [3.7. set_img_path()](#37-set_img_path)
+    - [3.8. get_img_path()](#38-get_img_path)
 
 <!-- /TOC -->
 
 ## 1. 数据结构定义
 
-Scallop的数据结构定义如下：
+枚一枚扇贝都具有一个唯一的扇贝基因数据结构`gene`，其定义如下：
 
 - birth_time: Unix时间戳。
 - raidus: 一个1到10的随机数，决定了扇贝的大小。
@@ -68,6 +70,7 @@ ColorSet中的数据定义如下：
 
 在这个非同质代币游戏中，有三个角色：
 
+- 管理员
 - 买家
 - 卖家
 - 扇贝
@@ -110,3 +113,12 @@ ColorSet中的数据定义如下：
 
 - 查询账户地址所拥有的扇贝
 - 扇贝信息以列表形式返回，每个列表中的元素为扇贝的编号。
+
+### 3.7. set_img_path()
+
+- 该接口仅供管理员调用。
+- 该接口用于为扇贝设置其外观图在IPFS中的存储位置。
+
+### 3.8. get_img_path()
+
+该接口返回扇贝外观图在IPFS中的存储位置`img_path`。
