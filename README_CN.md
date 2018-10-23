@@ -2,15 +2,31 @@
 
 [English](README.md)|[中文]
 
+<!-- TOC -->
+
+- [1. Scallop](#1-scallop)
+- [2. 角色定义](#2-角色定义)
+- [3. 接口定义](#3-接口定义)
+    - [3.1. adopt_scallop()](#31-adopt_scallop)
+    - [3.2. sell_scallop()](#32-sell_scallop)
+    - [3.3. buy_scallop()](#33-buy_scallop)
+    - [3.4. auction_scallop()](#34-auction_scallop)
+    - [3.5. lottery_scallop()](#35-lottery_scallop)
+    - [3.6. query_balance()](#36-query_balance)
+
+<!-- /TOC -->
+
 ## 1. Scallop
 
 Scallop的数据结构定义如下：
 
-- birth_time: Unix时间戳；
-- raidus: 一个1到10的随机数，决定了扇贝的大小；
-- card_color_index：卡牌背景色，随机从定义颜色集`ColorSet`中选取；
-- main_color_index: 扇贝的主色，随机从预定义颜色集`ColorSet`中选取；
-- id: 具有唯一性的扇贝编号，由`salt <- rand(1,100000)`，`id <- sha256(birth_time|raidus|main_color|salt)`生成；
+- birth_time: Unix时间戳。
+- raidus: 一个1到10的随机数，决定了扇贝的大小。
+- card_color_index：卡牌背景色，随机从定义颜色集`ColorSet`中选取。
+- main_color_index: 扇贝的主色，随机从预定义颜色集`ColorSet`中选取。
+- id: 具有唯一性的扇贝编号，由`salt <- rand(1,100000)`，`id <- sha256(birth_time|raidus|main_color|salt)`生成。
+- owner：扇贝的主人，由ONTID标识。
+- is_sell：扇贝是否处于出售状态。
 
 ColorSet中的数据定义如下：
 
@@ -46,3 +62,50 @@ ColorSet中的数据定义如下：
 |         28         |  blueglaze   |   釉蓝   |  (23,129,181)   |  (96,34,18,4)  |
 |         29         |   sophora    | 槐花黄绿 |  (210,217,122)  |  (28,6,66,0)   |
 |         30         |     pink     |   淡绯   |  (242,202,201)  |  (0,29,16,0)   |
+
+## 2. 角色定义
+
+在这个游戏中，有三个角色：
+
+- 买家
+- 卖家
+- 扇贝
+
+## 3. 接口定义
+
+### 3.1. adopt_scallop()
+
+- 每次扇贝的领养，用户需要花费10个Magic Token（一种OEP4 Toekn）。
+- 购买成功后，用户会得到一个随机的扇贝宝宝（具有随机的扇贝基因）。
+
+### 3.2. sell_scallop()
+
+- 扇贝所有者调用该接口将扇贝设置为卖出状态。
+- 在该接口中，扇贝所有者可以选择卖出方式：
+  - 拍卖：记时（默认为1小时）结束后，价高者得。
+  - 随机卖出（设置一个固定的抽奖价格，计时结束后，抽奖池中的所有资金都归卖家，扇贝被随机送给投注者）。
+  - 固定价格卖出：设定一个期望的成交价格。
+- 该接口一旦执行成功，状态将不可回退。
+
+### 3.3. buy_scallop()
+
+- 购买者调用该接口进行固定价格扇贝的购买。
+- 购买成功后，扇贝的owner将变为购买者的ONT ID，扇贝的卖家获得相应的Magic Token。
+
+### 3.4. auction_scallop()
+
+- 购买者调用该接口参与到扇贝的竞拍当中。
+- 购买者需要提供将竞拍资金抵押到合约当中，当拍卖结束后：
+  - 成功拍得的竞拍者获得扇贝。
+  - 未成功拍得的竞拍者资金从合约中返还到他的账户中。
+
+### 3.5. lottery_scallop()
+
+- 购买者调用该接口参与到扇贝的随机卖出当中。
+- 购买者需要为此支付指定金额的Magic Token作为参与费用。
+- 记时结束后，随机赢家将获得扇贝。
+
+### 3.6. query_balance()
+
+- 查询账户地址所拥有的扇贝
+- 扇贝信息以列表形式返回，每个列表中的元素为扇贝的编号。
