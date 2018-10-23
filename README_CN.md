@@ -14,7 +14,7 @@ Scallop的数据结构定义如下：
 
 ColorSet中的数据定义如下：
 
-| color unique index |  color name  |  颜色名  |       RGB       |      CMYK      |
+| color unique index | color label  |  颜色名  |       RGB       |      CMYK      |
 |:------------------:|:------------:|:--------:|:---------------:|:--------------:|
 |         1          |     grey     |  鱼尾灰  |   (94,97,109)   | (64,52,39,28)  |
 |         2          |    mauve     |  藤萝紫  |  (128,118,163)  |  (58,56,17,2)  |
